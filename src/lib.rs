@@ -391,7 +391,9 @@ impl RegisterInfo {
 impl RegisterClusterArrayInfo {
     fn parse(tree: &Element) -> RegisterClusterArrayInfo {
         RegisterClusterArrayInfo {
-            dim: try!(tree.get_child_text("dim").unwrap().parse::<u32>()),
+            dim: try!(tree.get_child("dim").map(|t| {
+                try!(parse::u32(t))
+            })),
             dim_increment: try!(tree.get_child("dimIncrement").map(|t| {
                 try!(parse::u32(t))
             })),
